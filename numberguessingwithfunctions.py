@@ -21,10 +21,10 @@ def get_difficulty_settings():
 def get_valid_guess(max_number):
     while True:
         try:
-            guess = int(input(f"guess a numba from 1 to {max_number}: "))
+            guess = int(input(f"guess a number from 1 to {max_number}: "))
             break
         except:
-            print("That was not a propa number bucko..")
+            print("That was not a propa number..")
     return guess
 
 def play_game(max_number, starting_attempts):
