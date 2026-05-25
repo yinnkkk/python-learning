@@ -46,6 +46,9 @@ def show_flash():
     try:
         with open("flash.json", "r") as f:
             flashcard = json.load(f)
+            for index, flash in enumerate(flashcard, start = 1):
+                print(f"{index}. Question: {flash['Question']} | Answer: {flash['Answer']} | Topic: {flash['Topic']}")
+        return flashcard
     except: 
         reaction = input("No flashcards currently. Wanna make some? (y/n)").lower()
         if reaction == "y":
@@ -53,10 +56,7 @@ def show_flash():
             return
         else:
             return
-    for index, flash in enumerate(flashcard, start = 1):
-        print(f"{index}. Question: {flash['Question']} | Answer: {flash['Answer']} | Topic: {flash['Topic']}")
-    return flashcard
-
+        
 def del_flash():
     flashcard = show_flash()
     if flashcard:
