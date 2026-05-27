@@ -5,7 +5,7 @@ import json
 def menu():
     while True:
         try:
-            choice = int(input("1. show grades\n2. add grades\n3. average grade\n4. highest/lowest grade\n5. failed/passed amount\n6. full statistics\n7 quit\n Enter:"))
+            choice = int(input("1. show grades\n2. add grades\n3. average grade\n4. highest/lowest grade\n5. failed/passed amount\n6. full statistics\n7 quit\n Enter: "))
             if choice == 1:
                 show_grades()
             if choice == 2:
@@ -20,7 +20,7 @@ def menu():
                 statistics()
             if choice == 7:
                 break
-        except:
+        except ValueError:
             print("Not a proper number")
 
 def show_grades():
@@ -33,8 +33,14 @@ def show_grades():
         print("No grades to print.")
 
 def average_grade():
-    grades = load_grades
+    grades = load_grades()
     print(f"The average grade is {np.mean(grades)}")
+
+def highest_lowest():
+    grades = load_grades()
+    print(f"Highest grade: {np.max(grades)}\nLowest grade: {np.min(grades)}")
+
+
 def add_grades():
     try:
         with open("grades.json", "r") as f:
@@ -44,7 +50,7 @@ def add_grades():
         grades = np.array([])
     while True:
         try:
-            grade = int(input("Which grade would you like to add? (Enter any letter to stop adding grades)"))
+            grade = int(input("Which grade would you like to add? (Enter any letter to stop adding grades): "))
             grades = np.append(grades, grade)
             grades_normal = grades.tolist()
             with open("grades.json", "w") as f:
