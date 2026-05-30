@@ -1,14 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+Seed = 3
+noisestrength = 1
+m = 3
+b = 5
+learning_rate = 0.01
+epochs = 1000
 
-np.random.seed(42)
+np.random.seed(Seed)
 def generate_data_inputs():
-    noise = np.random.randn(50)
+    noise = np.random.randn(50) * noisestrength
     x = np.random.uniform(0,10,50)
     return noise, x
 
-def true_function(noise, x, m=3, b=5):
+def true_function(noise, x):
     y = m * x + b + noise
     return y
 
@@ -24,11 +30,11 @@ def calculate_gradients(error, x):
     b_gradient = 2 * np.mean(error)
     return m_gradient, b_gradient
 
-def training(x, y, learning_rate = 0.01):
+def training(x, y):
     loss_history = []
     m_pred = 0
     b_pred = 0
-    for epoch in range(1,1000):
+    for epoch in range(1,epochs):
         y_guess = predict(x,m_pred,b_pred)
         error = y_guess - y
         mean_error = np.mean(error)
@@ -43,12 +49,12 @@ def training(x, y, learning_rate = 0.01):
             current_losses = np.mean(loss_history[-100:])
             previous_losses = np.mean(loss_history[-200:-100])
             improvement = previous_losses - current_losses
-            if improvement < 0.0001:
+            if abs(improvement) < 0.0001:
                 print(f"Stopped early at epoch {epoch}")
                 return m_pred, b_pred, loss_history
     return m_pred, b_pred, loss_history
     
-def plot_results(m_pred, b_pred, x, y, m=3, b=5):
+def plot_results(m_pred, b_pred, x, y):
     x_line = np.linspace(0, 10, 100) 
     y_line = m_pred * x_line + b_pred
     true_line = m * x_line + b
@@ -61,6 +67,7 @@ def plot_results(m_pred, b_pred, x, y, m=3, b=5):
     plt.plot(x_line, true_line, label = "True Function")
     plt.xlabel("X-Axis")
     plt.ylabel("Y_Axis")
+    plt.legend()
     plt.show()
 
 def plot_loss(loss_history):
