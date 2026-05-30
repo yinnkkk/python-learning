@@ -6,11 +6,12 @@ noisestrength = 1
 m = 3
 b = 5
 learning_rate = 0.01
+noise_amount = 50
 epochs = 1000
 
 np.random.seed(Seed)
 def generate_data_inputs():
-    noise = np.random.randn(50) * noisestrength
+    noise = np.random.randn(noise_amount) * noisestrength
     x = np.random.uniform(0,10,50)
     return noise, x
 
