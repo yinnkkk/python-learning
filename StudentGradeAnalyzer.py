@@ -30,7 +30,7 @@ def show_grades():
     grades = np.array(grades_normal)
 
     if len(grades) > 0:
-        for index, grade in enumerate(grades_normal(), start=1):
+        for index, grade in enumerate(grades_normal, start=1):
             print(f"{index}. {grade}")
     else:
         print("No grades to print.")
@@ -77,15 +77,16 @@ def delete_grades():
     grades = load_grades()
     show_grades()
     try:
-        delete = int(input("Which grade would you like to delete? (Type the number): ") - 1)
+        delete = int(input("Which grade would you like to delete? (Type the number): ")) - 1
         grade_deleted = grades[delete]
         grades = np.delete(grades, delete)
         grades_normal = grades.tolist()
         with open("grades.json", "w") as f:
             json.dump(grades_normal, f)
         print(f"{grade_deleted} succesfully deleted")
-    except:
-        print("Invalid entry.")
+    except Exception as e:
+        print("Error type:", type(e))
+        print("Error message:", e)
 
 def failed_passed():
     grades = load_grades()
@@ -97,11 +98,6 @@ def statistics():
     grades = load_grades()
     failed = grades[grades < 5]
     print(f"Amount of grades: {len(grades)}\nAverage grade: {np.mean(grades)}\nHighest grade: {np.max(grades)}\nLowest grade: {np.min(grades)}\nMedian grade: {np.median(grades)}\nStandard Derivation: {np.std(grades)}\nFailed grades: {len(failed)}\nPassed grades: {len(grades)-len(failed)}\nSorted: {np.sort(grades)}")
-
-
-
-
-
 
 if __name__ == "__main__":
     menu()
